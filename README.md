@@ -23,18 +23,59 @@ In timing diagram Q0 is changing as soon as the negative edge of clock pulse is 
 ![image](https://github.com/naavaneetha/4-BIT-RIPPLE-COUNTER/assets/154305477/85e1958a-2fc1-49bb-9a9f-d58ccbf3663c)
 
 **Procedure**
-
-/* write all the steps invloved */
+1.Increment count on each positive edge of the clock.
+2.Reset count to zero when it reaches 15. 
+3.Generate clock signal (clk).
+4.Instantiate the RippleCounter module.
+5.Conduct functional testing by displaying the count at each clock cycle for 16 cycles.
 
 **PROGRAM**
+ Program for 4 Bit Ripple Counter and verify its truth table in quartus using Verilog programming.
+```
+ Developed by: HARISH G
+ RegisterNumber:212224110020
+```
+```
+module ripple_counter_4bit (
+    input clk,         // Clock input
+    input reset,       // Asynchronous reset
+    output [3:0] q     // 4-bit counter output
+);
 
-/* Program for 4 Bit Ripple Counter and verify its truth table in quartus using Verilog programming.
+    wire clk1, clk2, clk3;
 
- Developed by: RegisterNumber:
-*/
+    // First flip-flop toggles with main clock
+    T_FF tff0 (.clk(clk), .reset(reset), .q(q[0]));
+
+    // Subsequent flip-flops toggle with output of previous FF
+    T_FF tff1 (.clk(q[0]), .reset(reset), .q(q[1]));
+    T_FF tff2 (.clk(q[1]), .reset(reset), .q(q[2]));
+    T_FF tff3 (.clk(q[2]), .reset(reset), .q(q[3]));
+
+endmodule
+
+// T Flip-Flop module
+module T_FF (
+    input clk,
+    input reset,
+    output reg q
+);
+    always @(posedge clk or posedge reset)
+    begin
+        if (reset)
+            q <= 0;
+        else
+            q <= ~q;
+    end
+endmodule
+```
+
 
 **RTL LOGIC FOR 4 Bit Ripple Counter**
+![398323659-d91f7f5c-7320-4e66-9822-c76178538294](https://github.com/user-attachments/assets/36253941-f06c-4058-8d27-40596bd78b90)
 
 **TIMING DIGRAMS FOR 4 Bit Ripple Counter**
+![398323747-a7868c4c-fa53-485f-97c6-a0029262da49](https://github.com/user-attachments/assets/d2b1a2ca-e84a-4f0d-96dd-1cac4bbe602a)
 
 **RESULTS**
+Thus the program executed sucesssfully.
